@@ -14,6 +14,6 @@ child.on("exit", () => {
   console.log("exit");
 });
 
-setTimeout(() => {
-  child.kill();
-}, 2000);
+// setTimeout(() => {
+//   child.kill();
+// }, 2000);
