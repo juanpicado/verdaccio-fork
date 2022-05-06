@@ -1,35 +1,65 @@
+# storage: ./storage
+
+# verdaccio-memory
 store:
   memory:
     limit: 1000
-web:
-  title: Verdaccio
+# verdaccio-auth-memory plugin
 auth:
+  # htpasswd:
+  #   file: ./htpasswd
   auth-memory:
     users:
       foo:
         name: foo
         password: bar
+      admin:  
+        name: foo
+        password: bar
+# uplinks
 uplinks:
   npmjs:
     url: https://registry.npmjs.org/
+  verdacciobk:
+    url: http://localhost:8000/
+    auth:
+      type: bearer
+      token: dsyTcamuhMd8GlsakOhP5A==
 packages:
   "@*/*":
     access: $all
     publish: $authenticated
     unpublish: $authenticated
     proxy: npmjs
+  "react":
+    access: $all
+    publish: $authenticated
+    unpublish: $authenticated
+    proxy: verdacciobk
   "**":
     access: $all
     publish: $authenticated
     unpublish: $authenticated
     proxy: npmjs
+
+# rate limit configuration
 rateLimit:
   windowMs: 1000
   max: 10000
+
 middlewares:
   audit:
     enabled: true
-logs:
-  { type: stdout, format: pretty, level: http }
+
+security: 
+  api: 
+    jwt: 
+     sign: 
+      expiresIn: 1d    
+
+logs: { type: stdout, format: pretty, level: http }
 i18n:
   web: en-US
+
+# try to use verdaccio with child_process:fork
+_debug: true

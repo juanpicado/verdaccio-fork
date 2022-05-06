@@ -1,19 +1,5 @@
-import { spawn } from "child_process";
+function foo() {
+  console.log("foo");
+}
 
-const child = spawn("node", [
-  require.resolve("verdaccio/bin/verdaccio"),
-  "-c",
-  "./verdaccio.yaml",
-]);
-
-child.stdout.on("data", (data) => {
-  process.stdout.write(data.toString());
-});
-
-child.on("exit", () => {
-  console.log("exit");
-});
-
-// setTimeout(() => {
-//   child.kill();
-// }, 2000);
+export default foo;
